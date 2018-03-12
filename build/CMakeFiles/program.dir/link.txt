@@ -1,1 +1,0 @@
-/usr/bin/c++      CMakeFiles/program.dir/src/functions.cpp.o CMakeFiles/program.dir/src/main.cpp.o CMakeFiles/program.dir/src/t_job.cpp.o  -o program -rdynamic 
