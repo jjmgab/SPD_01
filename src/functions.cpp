@@ -6,9 +6,11 @@ int jobs_time(std::vector<t_job>& jobs) {
 	int n = jobs.size();
 
 	// wyznaczanie czasow C i S
+	// pierwszy element
 	jobs.at(0).S = jobs.at(0).r;
 	jobs.at(0).C = jobs.at(0).S + jobs.at(0).p;
 
+	// pozostale elementy
 	for (i = 1; i < n; i++) {
 		jobs.at(i).S = std::max(jobs.at(i).r, jobs.at(i - 1).C);
 		jobs.at(i).C = jobs.at(i).S + jobs.at(i).p;
@@ -25,7 +27,8 @@ int jobs_time(std::vector<t_job>& jobs) {
 }
 
 std::vector<t_job>* load_data(const std::string& filename) {
-	int n, v;
+	int n,	// liczba zadan
+		v;	// ilosc parametrow na zadanie (niepotrzebne)
 	
 	std::ifstream file;				// plik z danymi
 	std::vector<t_job>* job_list_default = new std::vector<t_job>();
@@ -55,26 +58,29 @@ int jobs_Rsort(std::vector<t_job>& jobs) {
 
 int jobs_2opt(std::vector<t_job>& jobs) {
 	// algorytm 2-opt
-	int temp_overall_time = 0,
-		overall_time = 0;
+	int temp_overall_time = 0,	// czas wykonywania - tymczasowe dla porownywania
+		overall_time = 0;		// czas wykonywania sie wszystkich zadan
 
-	int i, j,
-		n = jobs.size();
+	int i, j,					// indeksy
+		n = jobs.size();		// liczba zadan
 
 	std::vector<t_job> job_list2(jobs);
 	overall_time = jobs_time(job_list2);
 
+	// iteruje po wszystkich elementach
 	for (i = 0; i < n - 1; i++) {
-
+		// kazdy kolejny element  odnosi sie do i-tego
 		for (j = i + 1; j < n; j++) {
 			std::swap(job_list2.at(i), job_list2.at(j));
 			temp_overall_time = jobs_time(job_list2);
 
+			// jesli lepszy czas
 			if (temp_overall_time < overall_time) {
 				overall_time = temp_overall_time;
-				i = 0; // (i > 0 ? 0 : i);
+				i = 0;
 				j = 1;
 			}
+			// jesli gorszy lub taki sam czas
 			else {
 				std::swap(job_list2.at(i), job_list2.at(j));
 			}
