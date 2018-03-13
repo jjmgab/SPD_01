@@ -3,19 +3,17 @@
 #include <ctime>
 #include <fstream>
 #include <vector>
+#include <functional>
 
 #include "functions.hpp"
 #include "t_job.hpp"
-
-
+#include "time_fun.hpp"
 
 
 int main() {
 
 	std::string names = "data/names.txt";	// lista nazw plikow
 	std::ifstream file_names;				// strumien wejsciowy do wczytywania nazw plikow
-	
-	clock_t t;								// do pomiaru czasu
 
 	int number_of_files = 0,				// potrzebne przy wczytywaniu danych z plikow, l. plikow
 		i;									// indeks do petli
@@ -42,27 +40,16 @@ int main() {
 		// wykonywanie sie poszczegolnych algorytmow
 		int time;
 
-		// Rsort
-		t = clock();
-		time = jobs_Rsort(*job_list_default);
-		t = clock()-t;
-		std::cout << filename + ": Czas wykonywania zadania dla alg. sort-R: " << time << std::endl
-		<< "Czas wykonywania algorytmu [s]: " << ((float)t/CLOCKS_PER_SEC) << std::endl;
+		time = measure_time(jobs_Rsort, job_list_default);
+		std::cout << filename + ": Czas wykonywania zadania dla alg. sort-R: " << time << std::endl;
 
 		// 2opt
-		t = clock();
-		time = jobs_2opt(*job_list_default);
-		t = clock()-t;
-		std::cout << filename + ": Czas wykonywania zadania dla alg. 2-opt: " << time << std::endl
-		<< "Czas wykonywania algorytmu [s]: " << ((float)t/CLOCKS_PER_SEC) << std::endl;
+		time = measure_time(jobs_2opt, job_list_default);
+		std::cout << filename + ": Czas wykonywania zadania dla alg. 2-opt: " << time << std::endl;
 
 		// Rsort, 2opt
-		t = clock();
-		std::sort(job_list_default->begin(), job_list_default->end());
-		time = jobs_2opt(*job_list_default);
-		t = clock()-t;
-		std::cout << filename + ": Czas wykonywania zadania dla alg. sortR+2-opt: " << time << std::endl
-		<< "Czas wykonywania algorytmu [s]: " << ((float)t/CLOCKS_PER_SEC) << std::endl;
+		time = measure_time(jobs_Rsort_2opt, job_list_default);
+		std::cout << filename + ": Czas wykonywania zadania dla alg. sortR+2-opt: " << time << std::endl;
 
 		delete job_list_default;
 	}

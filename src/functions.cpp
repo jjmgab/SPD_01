@@ -89,3 +89,8 @@ int jobs_2opt(std::vector<t_job>& jobs) {
 
 	return overall_time;
 }
+
+int jobs_Rsort_2opt(std::vector<t_job> &jobs) {
+	jobs_Rsort(jobs);
+	return jobs_2opt(jobs);
+}

@@ -44,4 +44,14 @@ int jobs_Rsort(std::vector<t_job>& jobs);
  */
 int jobs_2opt(std::vector<t_job>& jobs);
 
+/**
+ * Wykonuje algorytm szeregowania zadan Rsort+2opt. 
+ * Najpierw wykonuje Rsort, nastepnie 2opt.
+ * 
+ * @param referencja na wektor zadan
+ * @return czas wykonywania uszeregowanych zadan
+ */
+
+int jobs_Rsort_2opt(std::vector<t_job>& jobs);
+
 #endif //FUNCTIONS_H
