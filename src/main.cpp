@@ -12,8 +12,14 @@
 
 int main() {
 
-	std::string names = "data/names.txt";	// lista nazw plikow
+	std::string names = "data/names.txt",	// nazwa listy nazw plikow
+				output = "output.txt";		// nazwa pliku z danymi wyjsciowymi
+
 	std::ifstream file_names;				// strumien wejsciowy do wczytywania nazw plikow
+
+	std::filebuf file;						// plik z danymi wyjsciowymi
+	file.open(output, std::ios::out);
+	std::ostream loader(&file);				// strumien wyjsciowy, zamiast std::cout
 
 	int number_of_files = 0,				// potrzebne przy wczytywaniu danych z plikow, l. plikow
 		i;									// indeks do petli
@@ -32,7 +38,6 @@ int main() {
 		// wczytuje nazwe pliku
 		std::string filename = "";
 		file_names >> filename;
-		std::cout << filename << std::endl;
 		
 		// wczytuje dane z pliku
 		std::vector<t_job>* job_list_default = load_data("data/"+filename+".txt");
@@ -40,16 +45,20 @@ int main() {
 		// wykonywanie sie poszczegolnych algorytmow
 		int time;
 
-		time = measure_time(jobs_Rsort, job_list_default);
-		std::cout << filename + ": Czas wykonywania zadania dla alg. sort-R: " << time << std::endl;
+		std::cout << filename << std::endl;
+		loader << filename << std::endl;
+
+		// Rsort
+		time = measure_time(jobs_Rsort, job_list_default, loader);
+		loader << time << std::endl;
 
 		// 2opt
-		time = measure_time(jobs_2opt, job_list_default);
-		std::cout << filename + ": Czas wykonywania zadania dla alg. 2-opt: " << time << std::endl;
+		time = measure_time(jobs_2opt, job_list_default, loader);
+		loader << time << std::endl;
 
 		// Rsort, 2opt
-		time = measure_time(jobs_Rsort_2opt, job_list_default);
-		std::cout << filename + ": Czas wykonywania zadania dla alg. sortR+2-opt: " << time << std::endl;
+		time = measure_time(jobs_Rsort_2opt, job_list_default, loader);
+		loader << time << std::endl;
 
 		delete job_list_default;
 	}
