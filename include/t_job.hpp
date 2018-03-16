@@ -48,4 +48,24 @@ public:
 	}
 };
 
+
+
+struct compare_jobs_r {
+
+	bool operator()(const t_job& job1, const t_job& job2){
+		if (job1.r > job2.r) return true;
+		return false;
+	}
+
+};
+
+struct compare_jobs_q {
+
+	bool operator()(const t_job& job1, const t_job& job2){
+		if (job1.q < job2.q) return true;
+		return false;
+	}
+
+};
+
 #endif //TJOB_H

@@ -94,3 +94,39 @@ int jobs_Rsort_2opt(std::vector<t_job> &jobs) {
 	jobs_Rsort(jobs);
 	return jobs_2opt(jobs);
 }
+
+int jobs_schrage(std::vector<t_job>& jobs) {
+
+	std::priority_queue<t_job, std::vector<t_job>, compare_jobs_r> N;
+	std::priority_queue<t_job, std::vector<t_job>, compare_jobs_q> G;
+
+	std::vector<t_job> sorted_jobs;
+
+	for(std::vector<t_job>::iterator iter = jobs.begin(); iter != jobs.end(); iter++) {
+		N.push(*iter);
+	}
+
+	int t = N.top().r + N.top().p;
+	
+	G.push(N.top());
+	N.pop();
+	
+	while (!N.empty() || !G.empty()) {
+		while (!N.empty() && t >= N.top().r) {
+			G.push(N.top());
+			N.pop();
+		}
+
+		if (G.empty()) {
+			G.push(N.top());
+			N.pop();
+		}
+
+		sorted_jobs.push_back(G.top());
+		t += G.top().p;
+		G.pop();
+
+	}
+
+	return jobs_time(sorted_jobs);
+}

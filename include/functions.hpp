@@ -9,6 +9,8 @@
 #include <iterator>
 #include <string>
 
+#include <queue>
+
 #include "t_job.hpp"
 
 /**
@@ -53,5 +55,13 @@ int jobs_2opt(std::vector<t_job>& jobs);
  */
 
 int jobs_Rsort_2opt(std::vector<t_job>& jobs);
+
+/**
+ * Wykonuje algorytm szeregowania zadan Schrage.
+ * 
+ * @param referencja na wektor zadan
+ * @return czas wykonywania uszeregowanych zadan
+ */
+int jobs_schrage(std::vector<t_job>& jobs);
 
 #endif //FUNCTIONS_H

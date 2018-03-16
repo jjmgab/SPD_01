@@ -48,6 +48,10 @@ int main() {
 		std::cout << filename << std::endl;
 		loader << filename << std::endl;
 
+		time = measure_time(jobs_schrage, job_list_default, loader);
+		loader << time << std::endl;
+
+		/*
 		// Rsort
 		time = measure_time(jobs_Rsort, job_list_default, loader);
 		loader << time << std::endl;
@@ -59,6 +63,7 @@ int main() {
 		// Rsort, 2opt
 		time = measure_time(jobs_Rsort_2opt, job_list_default, loader);
 		loader << time << std::endl;
+		*/
 
 		delete job_list_default;
 	}
